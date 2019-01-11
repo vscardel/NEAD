@@ -1,20 +1,20 @@
 
-
 <!DOCTYPE HTML>
 
-<head>
+<!-- <head>
 	 <meta charset="UTF-8">
 
 <html>
 
 	<style>
-	
+        
         #fix_content{
 			text-decoration: none !important;
 			font-family: Quicksand,sans-serif !important;
 			padding: 18px;
 			margin-top: 5px;
 		}
+
 		#hidden_content{
 			text-decoration: none !important;
 			font-family: Quicksand,sans-serif !important;
@@ -22,24 +22,14 @@
 			margin-top: -35.7px;
  			max-height: 0;
 		}
-		#ver_mais{
-			background:none!important;
-			color:inherit;
-			border:none; 
-			padding:0!important;
-			font-family: Quicksand,sans-serif !important;
-			font: inherit;
-			/*border is optional*/
-			border-bottom:1px solid #444; 
-			cursor: pointer;
-			color: #e5a82f;
-		}
+
 		a{
 			color: #0070a8;
 		}
+
 	</style>
 	</head>
-
+ -->
 	<body>
 
 		<div>
@@ -49,7 +39,7 @@
 				<a  href = ""> segundo link </a> <br>
 				<a  href = ""> terceiro link </a> <br>
 				<a  href = ""> quarto link </a> <br>
-				<button onclick = "esconde_link()" id = "ver_mais"> ver mais +</button>
+				<button onclick = "esconde_link()" style = "border: none;background:none!important;color:inherit;padding:0!important;font-family: Quicksand,sans-serif !important;font: inherit;border-bottom:1px solid #444;cursor: pointer;color: #e5a82f;" id = "ver_mais"> ver mais +</button>
 			</div>
 
 			<div id = "hidden_content" style = "display: none">
@@ -67,8 +57,11 @@
 		<script>
 			
 			function esconde_link(){
+
 				var links = document.getElementById("hidden_content");
+
 				if(links.style.display === "none"){
+
 					document.getElementById('ver_mais').innerHTML = 'Ver menos -'
 					links.style.display = "block";
 				}
@@ -76,6 +69,7 @@
 					document.getElementById('ver_mais').innerHTML = 'Ver mais +'
 					links.style.display = "none";
 				}
+
 			}
 			
 		</script>
