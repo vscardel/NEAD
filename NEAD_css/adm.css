@@ -1,0 +1,10 @@
+#barra_lateral{
+	height: 100vh;
+	background-color: #424141;
+}
+
+#funcoes_admin{
+	border-bottom-color: rgb(207, 227, 220);
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}
