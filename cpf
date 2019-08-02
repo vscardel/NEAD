@@ -1,60 +1,69 @@
 
-        $CPF = $usernew->profile_field_CPF;
+        $user_cpf = $DB->get_record_sql("SELECT data FROM {user_info_data} WHERE data = '".$usernew->profile_field_CPF."'");
+
+		if(!empty($user_cpf)){
+			$err['profile_field_CPF'] = 'CPF já existe no sistema';
+		}
+
+		$CPF = $usernew->profile_field_CPF;
 
         //user inserted CPF
-        if(!empty($CPF)){
+       	if(!empty($CPF)){
 
-            $erro = false;
+			if(strlen($CPF) != 11){
+				$err['profile_field_CPF'] = 'CPF deve conter onze dígitos.';
+			}
+			else{
 
-            $arr_cpf = str_split($CPF);
-            $value = $arr_cpf[0];
-            $eh_homogeneo = true;
+		        $arr_cpf = str_split($CPF); 
+		        $value = $arr_cpf[0]; 
+		        $eh_homogeneo = true;
 
-            //check if every digit on the string is the same
-            //checa se todo digito na string eh o mesmo
-            foreach ($arr_cpf as $variable) {  
-                if ($variable != $value){
-                    $eh_homogeneo = false;
-                    break;
-                }
-            }
+		        //check if every digit on the string is the same
+		        //checa se todo digito na string eh o mesmo
+		        foreach ($arr_cpf as $variable) {  
+		            if ($variable != $value){
+		                $eh_homogeneo = false;
+		                break;
+		            }
+		        }
 
-            //first and second verification digit
-            //primeiro e segundo digito de verificacao
-            $prim_ver = $arr_cpf[count($arr_cpf)-2];
-            $seg_ver = $arr_cpf[count($arr_cpf)-1];
+		        //first and second verification digit
+		        //primeiro e segundo digito de verificacao
+		        $prim_ver = $arr_cpf[count($arr_cpf)-2];
+		        $seg_ver = $arr_cpf[count($arr_cpf)-1];
 
-            $soma_1 = 0;
-            $soma_2 = 0;
-            $cont = 10;
+		        $soma_1 = 0;
+		        $soma_2 = 0;
+		        $cont = 10;
 
-            //algorithm to verify the cpf
-            //algoritmo para verificar o cpf
-            for($i=0;$i<9;$i++){
-                $soma_1 = $soma_1 + ($cont*$arr_cpf[$i]);
-                $cont = $cont-1;
-            }
+		        //algorithm to verify the cpf
+		        //algoritmo para verificar o cpf
+		        for($i=0;$i<9;$i++){
+		            $soma_1 = $soma_1 + ($cont*$arr_cpf[$i]);
+		            $cont = $cont-1;
+		        }
 
-            $cont = 11;
-            for($i=0;$i<10;$i++){
-                $soma_2 = $soma_2 + ($cont*$arr_cpf[$i]);
-                $cont = $cont-1;
-            }
+		        $cont = 11;
+		        for($i=0;$i<10;$i++){
+		            $soma_2 = $soma_2 + ($cont*$arr_cpf[$i]);
+		            $cont = $cont-1;
+		        }
 
-            $ver_1 = ($soma_1*10) % 11;
-            $ver_2 = ($soma_2*10) % 11;
+		        $ver_1 = ($soma_1*10) % 11;
+		        $ver_2 = ($soma_2*10) % 11;
 
-            if($ver_1 == 10){
-                $ver_1 = 0;
-            }
-            if($ver_2 == 10){
-                $ver_2 = 0;
-            }
-
-            if($eh_homogeneo){
-                $err['profile_field_CPF'] = 'Todos os digitos idênticos.';
-            }
-            else if($prim_ver != $ver_1 or $seg_ver != $ver_2){
-                $err['profile_field_CPF'] = 'CPF inválido';
-            }
+		        if($ver_1 == 10){
+		            $ver_1 = 0;
+		        }
+		        if($ver_2 == 10){
+		            $ver_2 = 0;
+		        }
+		        if($eh_homogeneo){
+		            $err['profile_field_CPF'] = 'Todos os digitos idênticos.';
+		        }
+		        else if($prim_ver != $ver_1 or $seg_ver != $ver_2){
+		            $err['profile_field_CPF'] = 'CPF inválido';
+		        }
+			}
         }
