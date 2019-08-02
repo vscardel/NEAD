@@ -1,15 +1,14 @@
-
-        $user_cpf = $DB->get_record_sql("SELECT data FROM {user_info_data} WHERE data = '".$usernew->profile_field_CPF."'");
-
-		if(!empty($user_cpf)){
-			$err['profile_field_CPF'] = 'CPF já existe no sistema';
-		}
-
-		$CPF = $usernew->profile_field_CPF;
+$CPF = $usernew->profile_field_CPF;
 
         //user inserted CPF
+
        	if(!empty($CPF)){
 
+			$user_cpf = $DB->get_record_sql("SELECT data FROM {user_info_data} WHERE data = '".$CPF."'");
+
+			if(!empty($user_cpf)){
+				$err['profile_field_CPF'] = 'CPF já existe no sistema';
+			}
 			if(strlen($CPF) != 11){
 				$err['profile_field_CPF'] = 'CPF deve conter onze dígitos.';
 			}
